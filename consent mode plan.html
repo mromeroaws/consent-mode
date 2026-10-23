@@ -1,0 +1,452 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>aws.org Consent Mode Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: navy masthead band (D1.2 report style), status strip, vendor tab bar, one 1120px column per tab */
+:root{
+  --navy:#0B2B53; --navy-ink:#0B2B53; --orange:#C9531B; --orange-soft:#F7E3D8;
+  --bg:#F4F5F7; --surface:#FFFFFF; --fg:#18222F; --muted:#5B6675; --line:#DCE0E6; --track:#E7EAEF;
+  --good:#1E7A4C; --good-bg:#E2F2E9; --bad:#B42318; --bad-bg:#FBE6E3; --warn:#9A6200; --warn-bg:#FBF0D9;
+  --info:#28568F; --info-bg:#E3ECF7;
+  --mast-fg:#FFFFFF; --mast-muted:#B9C7DA; --mast-body:#DCE5F1; --mast-accent:#F3A57D;
+  --f-display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Barlow","Segoe UI",Arial,sans-serif;
+  --f-data:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --navy:#0A1F3B; --navy-ink:#9DBBE3; --orange:#F0844D; --orange-soft:#3A2418;
+  --bg:#0F151D; --surface:#17202B; --fg:#E7ECF2; --muted:#9AA6B6; --line:#2A3542; --track:#26313E;
+  --good:#5CC48C; --good-bg:#16301F; --bad:#F2877B; --bad-bg:#3A1A17; --warn:#E6B65A; --warn-bg:#332710;
+  --info:#8EB4E8; --info-bg:#172A42; --mast-fg:#FFFFFF; --mast-muted:#9DB0C8; --mast-body:#DCE5F1; --mast-accent:#F3A57D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --navy:#0A1F3B; --navy-ink:#9DBBE3; --orange:#F0844D; --orange-soft:#3A2418;
+  --bg:#0F151D; --surface:#17202B; --fg:#E7ECF2; --muted:#9AA6B6; --line:#2A3542; --track:#26313E;
+  --good:#5CC48C; --good-bg:#16301F; --bad:#F2877B; --bad-bg:#3A1A17; --warn:#E6B65A; --warn-bg:#332710;
+  --info:#8EB4E8; --info-bg:#172A42; --mast-fg:#FFFFFF; --mast-muted:#9DB0C8; --mast-body:#DCE5F1; --mast-accent:#F3A57D; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+.eyebrow{font-family:var(--f-display);font-weight:600;font-size:12.5px;letter-spacing:.09em;text-transform:uppercase}
+.ico{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.flag{font-size:20px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+
+/* Masthead */
+.mast{background:var(--navy);color:var(--mast-fg);border-bottom:4px solid var(--orange)}
+.mast .wrap{padding-block:28px 26px;display:grid;gap:18px}
+.mast .eyebrow{color:var(--mast-muted)}
+.mast h1{font-size:clamp(28px,4.4vw,42px);font-weight:700}
+.mast-meta{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mast-muted);font-size:14px}
+.mast-meta b{color:var(--mast-fg);font-weight:600}
+.brief{display:grid;grid-template-columns:1fr 1.6fr;gap:22px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
+.brief p{margin-top:4px;color:var(--mast-body);font-size:14.5px;max-width:68ch}
+.brief .eyebrow{color:var(--mast-accent)}
+
+main .wrap{padding-block:26px 48px;display:grid;gap:30px}
+section{display:grid;gap:14px;min-width:0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--line);padding-bottom:8px}
+.sec-head h2{font-size:24px;font-weight:700;color:var(--navy-ink)}
+.sec-head .eyebrow{color:var(--orange)}
+.note{color:var(--muted);font-size:13.5px}
+
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-weight:600;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.p-good{color:var(--good);background:var(--good-bg)}
+.p-bad{color:var(--bad);background:var(--bad-bg)}
+.p-warn{color:var(--warn);background:var(--warn-bg)}
+.p-info{color:var(--info);background:var(--info-bg)}
+
+/* Status strip */
+.status{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.status > div{padding:14px 16px;border-left:1px solid var(--line);display:grid;gap:6px;align-content:start;min-width:0}
+.status > div:first-child{border-left:0}
+.status .who{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--navy-ink)}
+.status p{font-size:14px;color:var(--muted)}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--line);overflow-x:auto;scrollbar-width:thin}
+.tab{font:600 15px var(--f-display);letter-spacing:.02em;color:var(--muted);background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;padding:10px 16px 9px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.tab:hover{color:var(--fg)}
+.tab[aria-selected="true"]{color:var(--navy-ink);border-bottom-color:var(--orange)}
+.tab .cnt{font-size:11.5px;background:var(--track);color:var(--muted);border-radius:999px;padding:1px 7px}
+button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.panel-tab{display:grid;gap:30px}
+
+.lead{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px}
+.lead .badge{width:48px;height:48px;border-radius:8px;display:grid;place-items:center;background:var(--navy);color:#fff}
+.lead .badge .ico{width:26px;height:26px}
+.lead h3{font-size:20px;font-weight:700;color:var(--navy-ink)}
+.lead p{font-size:15px;max-width:80ch;margin-top:4px}
+
+/* Recommendation cards */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 12px;align-content:start;min-width:0}
+.card .ic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--info-bg);color:var(--info);grid-row:span 2}
+.card.o .ic{background:var(--orange-soft);color:var(--orange)}
+.card.w .ic{background:var(--warn-bg);color:var(--warn)}
+.card.r .ic{background:var(--bad-bg);color:var(--bad)}
+.card h3{font-size:17px;font-weight:700;color:var(--fg);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.card p{font-size:14.5px;color:var(--muted)}
+.card .flags{display:flex;gap:4px;margin-top:6px;grid-column:2}
+
+/* Region comparison */
+.regions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.region{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:grid;min-width:0}
+.region-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.region-head h3{font-size:19px;font-weight:700;color:var(--navy-ink)}
+.region-head .flags{display:flex;gap:4px}
+.region-head .pill{margin-left:auto}
+.region-body{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;padding:16px;align-items:start}
+.region ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:14.5px}
+.region li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px}
+.region li .ico{width:18px;height:18px;margin-top:2px;color:var(--orange)}
+/* mini browser mock: shows where the banner sits */
+.mock{border:1.5px solid var(--line);border-radius:6px;background:var(--bg);aspect-ratio:3/4;position:relative;overflow:hidden;max-width:100%}
+.mock::before{content:"";position:absolute;inset:0 0 auto;height:14px;background:var(--track);border-bottom:1px solid var(--line)}
+.mock i{position:absolute;left:12px;right:12px;height:6px;border-radius:3px;background:var(--track)}
+.mock .bn{position:absolute;background:var(--navy);color:#fff;font:600 9.5px var(--f-display);letter-spacing:.05em;text-transform:uppercase;display:grid;place-items:center;text-align:center;padding:4px;border-radius:3px}
+.mock .bn.foot{left:6px;right:6px;bottom:6px;height:28px}
+.mock .bn.mid{left:14px;right:14px;top:38%;height:56px;box-shadow:0 0 0 400px rgba(11,43,83,.28)}
+.mock .bn b{display:block;color:var(--mast-accent);font-size:9px}
+
+/* Steps timeline */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;position:relative}
+.step{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;position:relative;padding-bottom:16px}
+.step:not(:last-child)::after{content:"";position:absolute;left:23px;top:46px;bottom:0;width:2px;background:var(--line)}
+.step .n{width:48px;height:48px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;position:relative;z-index:1}
+.step.now .n{background:var(--orange)}
+.step .n .ico{width:22px;height:22px}
+.step-body{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 16px 14px;display:grid;gap:8px;min-width:0}
+.step-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.step-top .num{font-family:var(--f-display);font-weight:600;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange)}
+.step-top h3{font-size:18px;font-weight:700;color:var(--navy-ink)}
+.owner{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:2px 10px 2px 6px;color:var(--fg)}
+.owner .ico{width:15px;height:15px;color:var(--muted)}
+.step-top .pill{margin-left:auto}
+.step ul{margin:0;padding-left:18px;font-size:14.5px;display:grid;gap:4px}
+.step ul li::marker{color:var(--orange)}
+code{font-family:var(--f-data);font-size:12.5px;background:var(--track);padding:1px 5px;border-radius:3px}
+
+/* Load-order strip */
+.order{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.order .blk{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:9px 14px;font-weight:600;font-size:14.5px}
+.order .blk:first-child{border-color:var(--orange);background:var(--orange-soft)}
+.order .blk small{font-family:var(--f-display);font-weight:700;color:var(--orange);font-size:13px}
+.order .arr{color:var(--muted)}
+
+.callout{border-left:4px solid var(--orange);background:var(--surface);padding:12px 16px;border-radius:0 6px 6px 0;font-size:14.5px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px}
+.callout .ico{color:var(--orange);margin-top:1px}
+.callout.warn{border-left-color:var(--warn)}
+.callout.warn .ico{color:var(--warn)}
+
+/* Dependency chain (Perficient) */
+.chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.chain > div{padding:16px;display:grid;gap:8px;align-content:start;border-left:1px solid var(--line);position:relative;min-width:0}
+.chain > div:first-child{border-left:0}
+.chain .h{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:700;font-size:16px;color:var(--navy-ink)}
+.chain .h .ico{color:var(--orange)}
+.chain p{font-size:14px;color:var(--muted)}
+.chain > div.blocked{background:var(--warn-bg)}
+
+.checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+
+/* Legal questions */
+.qgroups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.qg{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.qg h3{font-size:18px;font-weight:700;color:var(--navy-ink);display:flex;align-items:center;gap:8px}
+.qg h3 .ico{color:var(--orange)}
+.qg ol{margin:0;padding-left:20px;display:grid;gap:8px;font-size:14.5px}
+.qg ol li::marker{font-family:var(--f-display);font-weight:700;color:var(--orange)}
+.qg .flags{display:inline-flex;gap:3px;vertical-align:middle;margin-left:4px}
+.qg .flag{font-size:16px}
+.qg .hint{font-size:13px;color:var(--muted);display:block;margin-top:2px}
+
+footer{border-top:2px solid var(--line);padding-top:14px;font-size:13px;color:var(--muted);display:grid;gap:6px}
+footer p{max-width:110ch}
+
+@media (max-width:900px){
+  .status{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .status > div:nth-child(3){border-left:0}
+  .status > div:nth-child(n+3){border-top:1px solid var(--line)}
+  .brief,.cards,.regions,.qgroups{grid-template-columns:minmax(0,1fr)}
+  .chain{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chain > div:nth-child(3){border-left:0}
+  .chain > div:nth-child(n+3){border-top:1px solid var(--line)}
+  .checks{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .status,.chain{grid-template-columns:minmax(0,1fr)}
+  .status > div,.chain > div{border-left:0;border-top:1px solid var(--line)}
+  .status > div:first-child,.chain > div:first-child{border-top:0}
+  .region-body{grid-template-columns:minmax(0,1fr)}
+  .mock{max-width:150px}
+  .step{grid-template-columns:36px minmax(0,1fr);gap:10px}
+  .step .n{width:36px;height:36px}
+  .step:not(:last-child)::after{left:17px;top:34px}
+  .step-top .pill{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<!-- Icon set -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M7 9l4 4 3-3 5 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M7 7l4 5 3-2 5 7"/><path d="M19 13v4h-4"/></symbol>
+  <symbol id="i-cookie" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9 3 3 0 0 0 4 4 3 3 0 0 0 5 5z"/><circle cx="8.5" cy="10.5" r=".8"/><circle cx="12" cy="15" r=".8"/><circle cx="15.5" cy="12" r=".8"/></symbol>
+  <symbol id="i-banner" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15h18M6 17.5h6"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4 19a1.5 1.5 0 0 0 1.3 2h13.4A1.5 1.5 0 0 0 20 19L14 9V3"/><path d="M7 15h10"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 7a8 8 0 0 0-14-2L4 7M4 3v4h4M4 17a8 8 0 0 0 14 2l2-2M20 21v-4h-4"/></symbol>
+  <symbol id="i-order" viewBox="0 0 24 24"><path d="M4 6h10M4 12h7M4 18h4M17 4v16M14 17l3 3 3-3"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></symbol>
+  <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.4V14M12 17h.01"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 8h8v13M2 21h20M7 9h2M7 13h2M7 17h2M15 12h2M15 16h2"/></symbol>
+</svg>
+
+<header class="mast">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">American Welding Society · aws.org · GA4 Advanced Consent Mode</div>
+      <h1>Consent Mode: Vendor Recommendations &amp; Plan</h1>
+    </div>
+    <div class="mast-meta">
+      <span>Status as of <b>Oct 23, 2026</b></span>
+      <span>Vendors <b>OuterBox · HubSpot · Perficient</b></span>
+      <span>Decision owner <b>AWS Legal</b></span>
+      <span>Prepared by <b>Miguel Romero</b>, Digital Director</span>
+    </div>
+    <div class="brief">
+      <div><span class="eyebrow">Why this matters</span><p>Advanced Consent Mode went live on aws.org around Sept 21, 2026, and reported GA4 sessions dropped.</p></div>
+      <div><span class="eyebrow">Where the vendors agree</span><p>Legal decides first. Use different consent rules by region (opt-in where the law requires it, opt-out where it allows it). Keep Advanced Consent Mode so GA4 can still send cookieless signals. Treat post-consent numbers as a new baseline.</p></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+<section aria-labelledby="st-h">
+  <div class="sec-head"><h2 id="st-h">Status at a glance</h2><span class="eyebrow">Who is waiting on whom</span></div>
+  <div class="status">
+    <div><span class="who"><svg class="ico"><use href="#i-scale"/></svg>AWS Legal</span><span class="pill p-warn">Decision pending</span><p>Must answer the open questions before anyone builds.</p></div>
+    <div><span class="who"><svg class="ico"><use href="#i-building"/></svg>OuterBox</span><span class="pill p-good">Delivered</span><p>Shared its own CookieYes setup as an example, not legal advice.</p></div>
+    <div><span class="who"><svg class="ico"><use href="#i-plug"/></svg>HubSpot</span><span class="pill p-info">Plan ready</span><p>Six-step plan. Two product questions still open with HubSpot.</p></div>
+    <div><span class="who"><svg class="ico"><use href="#i-chart"/></svg>Perficient</span><span class="pill p-warn">Waiting on Legal</span><p>Will recommend once Legal answers.</p></div>
+  </div>
+</section>
+
+<section aria-label="Vendor recommendations">
+  <div class="tabs" role="tablist" aria-label="Vendors">
+    <button class="tab" role="tab" id="tab-outerbox" aria-controls="outerbox" aria-selected="true"><svg class="ico"><use href="#i-building"/></svg>OuterBox</button>
+    <button class="tab" role="tab" id="tab-hubspot" aria-controls="hubspot" aria-selected="false"><svg class="ico"><use href="#i-plug"/></svg>HubSpot</button>
+    <button class="tab" role="tab" id="tab-perficient" aria-controls="perficient" aria-selected="false"><svg class="ico"><use href="#i-chart"/></svg>Perficient</button>
+    <button class="tab" role="tab" id="tab-legal" aria-controls="legal" aria-selected="false"><svg class="ico"><use href="#i-scale"/></svg>Questions for Legal <span class="cnt">11</span></button>
+  </div>
+
+  <!-- ============ OUTERBOX ============ -->
+  <div class="panel-tab" role="tabpanel" id="outerbox" aria-labelledby="tab-outerbox">
+    <div class="lead">
+      <div class="badge"><svg class="ico"><use href="#i-building"/></svg></div>
+      <div><h3>OuterBox: split consent by region and keep Advanced Consent Mode</h3>
+      <p>OuterBox recommends different consent rules by region, Advanced Consent Mode to keep some measurement through cookieless signals, and accepting that GA4 reporting will change. AWS Legal approves the final approach.</p></div>
+    </div>
+
+    <section aria-labelledby="ob-rec">
+      <div class="sec-head"><h2 id="ob-rec">Four recommendations</h2><span class="eyebrow">OuterBox</span></div>
+      <div class="cards">
+        <div class="card o"><span class="ic"><svg class="ico"><use href="#i-scale"/></svg></span><h3>Consult with Legal</h3><p>The cookie banner and Privacy Policy must meet AWS's legal requirements. OuterBox's setup is an example, not legal advice.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-globe"/></svg></span><h3>Regional consent settings</h3><p>Opt-in for the EU/EEA and other regions where the law requires it. Opt-out in the United States and other regions where the law permits it.</p><div class="flags"><span class="flag" title="European Union">🇪🇺</span><span class="flag" title="United States">🇺🇸</span></div></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-shield"/></svg></span><h3>Use Advanced Consent Mode</h3><p>When users decline, GA4 still sends cookieless signals. Google may use them for behavioral modeling if the property meets its requirements.</p></div>
+        <div class="card w"><span class="ic"><svg class="ico"><use href="#i-down"/></svg></span><h3>Expect fewer reported sessions</h3><p>Consent rules reduce what GA4 collects. Track trends against the new baseline and be careful with year-over-year comparisons.</p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="ob-impl">
+      <div class="sec-head"><h2 id="ob-impl">How OuterBox runs it on its own site</h2><span class="eyebrow">CookieYes · rules set by visitor location</span></div>
+      <div class="regions">
+        <div class="region">
+          <div class="region-head"><span class="flags"><span class="flag" title="United States">🇺🇸</span></span><h3>United States</h3><span class="pill p-good">Opt-out</span></div>
+          <div class="region-body">
+            <div class="mock" aria-label="Banner in the page footer"><i style="top:24px"></i><i style="top:36px;right:40px"></i><i style="top:48px"></i><i style="top:60px;right:28px"></i><i style="top:72px"></i><div class="bn foot">Cookie notice · footer</div></div>
+            <ul>
+              <li><svg class="ico"><use href="#i-scale"/></svg><span>Follows the applicable US state privacy laws.</span></li>
+              <li><svg class="ico"><use href="#i-check"/></svg><span>Tracking is <b>on by default</b> until the visitor opts out.</span></li>
+              <li><svg class="ico"><use href="#i-banner"/></svg><span>Banner sits in the <b>footer</b>, so it doesn't block the page.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="region">
+          <div class="region-head"><span class="flags"><span class="flag" title="European Union">🇪🇺</span><span class="flag" title="Rest of world">🌍</span></span><h3>All other regions</h3><span class="pill p-bad">Opt-in</span></div>
+          <div class="region-body">
+            <div class="mock" aria-label="Banner in the center of the page"><i style="top:24px"></i><i style="top:36px;right:40px"></i><i style="top:48px"></i><div class="bn mid"><span><b>GDPR</b>Accept · Reject</span></div></div>
+            <ul>
+              <li><svg class="ico"><use href="#i-scale"/></svg><span>GDPR applied as the general rule.</span></li>
+              <li><svg class="ico"><use href="#i-hand"/></svg><span>Consent is <b>denied by default</b> until the visitor chooses.</span></li>
+              <li><svg class="ico"><use href="#i-banner"/></svg><span>Banner sits in the <b>center</b> of the page to prompt a choice.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="callout"><svg class="ico"><use href="#i-shield"/></svg><p><b>GA4 in every region.</b> When visitors decline, GA4 still sends cookieless signals through Consent Mode, which Google may use for modeling if eligibility is met. All other marketing, analytics and ad tags follow the consent settings and are blocked when required.</p></div>
+    </section>
+  </div>
+
+  <!-- ============ HUBSPOT ============ -->
+  <div class="panel-tab" role="tabpanel" id="hubspot" aria-labelledby="tab-hubspot" hidden>
+    <div class="lead">
+      <div class="badge"><svg class="ico"><use href="#i-plug"/></svg></div>
+      <div><h3>HubSpot: implementation plan for aws.org</h3>
+      <p>Advanced Consent Mode on aws.org with consent settings by region, changes in Google Tag Manager (GTM), and a check of the impact on GA4 reports.</p></div>
+    </div>
+
+    <section aria-labelledby="hs-plan">
+      <div class="sec-head"><h2 id="hs-plan">Six-step plan</h2><span class="eyebrow">In order · each step waits on the one before</span></div>
+      <ol class="steps">
+        <li class="step now"><span class="n"><svg class="ico"><use href="#i-scale"/></svg></span><div class="step-body">
+          <div class="step-top"><span class="num">Step 1</span><h3>Legal validation</h3><span class="owner"><svg class="ico"><use href="#i-user"/></svg>AWS Legal</span><span class="pill p-warn">Pending</span></div>
+          <ul><li>Confirm which countries require opt-in and which allow opt-out.</li><li>Set the default consent for each region and which categories stay denied.</li><li>Approve the banner text and the privacy policies.</li></ul></div></li>
+        <li class="step"><span class="n"><svg class="ico"><use href="#i-banner"/></svg></span><div class="step-body">
+          <div class="step-top"><span class="num">Step 2</span><h3>Banner setup</h3><span class="owner"><svg class="ico"><use href="#i-user"/></svg>Miguel</span></div>
+          <ul><li>Keep opt-in for the EU/EEA 🇪🇺, UK 🇬🇧 and other places that require it.</li><li>Evaluate HubSpot's new editor for opt-out where allowed.</li><li>Confirm the new editor can show a different banner type by country.</li></ul></div></li>
+        <li class="step"><span class="n"><svg class="ico"><use href="#i-code"/></svg></span><div class="step-body">
+          <div class="step-top"><span class="num">Step 3</span><h3>Consent script</h3><span class="owner"><svg class="ico"><use href="#i-user"/></svg>Slobodan</span></div>
+          <ul><li>Set <code>denied</code> for regions that require opt-in.</li><li>Set the default consent explicitly for all other regions.</li><li>Run the HubSpot listener to pick up the visitor's saved choice.</li><li>Load the consent script before HubSpot and GTM, in that order.</li></ul></div></li>
+        <li class="step"><span class="n"><svg class="ico"><use href="#i-tag"/></svg></span><div class="step-body">
+          <div class="step-top"><span class="num">Step 4</span><h3>GTM configuration</h3><span class="owner"><svg class="ico"><use href="#i-user"/></svg>Slobodan</span></div>
+          <ul><li>GA4 tag fires on <b>All Pages</b>, with no extra consent requirement in GTM.</li><li>Remove the <code>hubspotConsentUpdate</code> trigger.</li><li>Review custom HTML tags, including personalization, and give each its own consent rule.</li><li>Publish the container after review.</li></ul></div></li>
+        <li class="step"><span class="n"><svg class="ico"><use href="#i-flask"/></svg></span><div class="step-body">
+          <div class="step-top"><span class="num">Step 5</span><h3>Testing</h3><span class="owner"><svg class="ico"><use href="#i-user"/></svg>UAT &amp; production</span></div>
+          <ul><li>Check consent before a choice, after Accept and after Reject, using a VPN for each region 🇺🇸 🇪🇺 🇬🇧.</li><li>Confirm the Consent Default → Consent Update sequence in Tag Assistant.</li><li>Check how the <code>_ga</code> cookies behave after Reject.</li><li>Fix UAT so test events stop reaching the production GA4 property.</li></ul></div></li>
+        <li class="step"><span class="n"><svg class="ico"><use href="#i-chart"/></svg></span><div class="step-body">
+          <div class="step-top"><span class="num">Step 6</span><h3>Reporting validation</h3><span class="owner"><svg class="ico"><use href="#i-user"/></svg>Perficient</span></div>
+          <ul><li>Measure how much US 🇺🇸 session volume comes back.</li><li>Confirm the requirements to turn on Behavioral Modeling in GA4.</li><li>Check reporting identity is set to <b>Blended</b> and Google's traffic thresholds are met.</li></ul></div></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="hs-tech">
+      <div class="sec-head"><h2 id="hs-tech">Key technical advice</h2><span class="eyebrow">Five rules for the build</span></div>
+      <div class="order" aria-label="Required script load order">
+        <span class="blk"><small>1</small>Consent script</span><span class="arr">→</span>
+        <span class="blk"><small>2</small>HubSpot</span><span class="arr">→</span>
+        <span class="blk"><small>3</small>GTM / GA4</span>
+        <span class="note">Required load order, so the first GA4 event carries the right consent state.</span>
+      </div>
+      <div class="cards">
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-sync"/></svg></span><h3>Keep region lists in sync</h3><p>HubSpot decides which banner a visitor sees, but Google's script sets the default consent with its <code>region</code> parameter. The two country lists must be kept in sync by hand.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-order"/></svg></span><h3>Guarantee load order</h3><p>The consent script runs before HubSpot and GTM so the first GA4 event reflects the correct state.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-hand"/></svg></span><h3>Don't set <code>gcs</code> by hand</h3><p>The Google tag adds this value automatically. The team only needs to confirm the consent state is right.</p></div>
+        <div class="card w"><span class="ic"><svg class="ico"><use href="#i-q"/></svg></span><h3>New editor: open questions <span class="pill p-warn">Waiting on HubSpot</span></h3><p>HubSpot still has to confirm whether banner types can differ by country, and how the listener behaves when a visitor rejects.</p></div>
+      </div>
+      <div class="callout warn"><svg class="ico"><use href="#i-pause"/></svg><p><b>Don't migrate yet.</b> Before pressing <b>Switch</b> to the new editor, take a screenshot of the current settings and wait for HubSpot to confirm the migration can be reversed.</p></div>
+    </section>
+  </div>
+
+  <!-- ============ PERFICIENT ============ -->
+  <div class="panel-tab" role="tabpanel" id="perficient" aria-labelledby="tab-perficient" hidden>
+    <div class="lead">
+      <div class="badge"><svg class="ico"><use href="#i-chart"/></svg></div>
+      <div><h3>Perficient: waiting for Legal before recommending</h3>
+      <p>Perficient is holding its recommendation until AWS Legal answers the open questions. Its own role in the plan is reporting: checking that GA4 data recovers and that modeling can switch on.</p></div>
+    </div>
+
+    <section aria-labelledby="pf-chain">
+      <div class="sec-head"><h2 id="pf-chain">How we got here and what unlocks Perficient</h2><span class="eyebrow">Dependency chain</span></div>
+      <div class="chain">
+        <div><span class="h"><svg class="ico"><use href="#i-search"/></svg>1 · Audit</span><span class="pill p-good">Done</span><p>Perficient's ticket reviewing GTM scripts found GA4 tracking before consent.</p></div>
+        <div><span class="h"><svg class="ico"><use href="#i-shield"/></svg>2 · Fix</span><span class="pill p-good">Live ~Sep 21</span><p>Advanced Consent Mode went live, recommended and validated by HubSpot Support. Reported sessions dropped.</p></div>
+        <div class="blocked"><span class="h"><svg class="ico"><use href="#i-scale"/></svg>3 · Legal</span><span class="pill p-warn">Blocking</span><p>Legal's answers set the regions, defaults and banner rules.</p></div>
+        <div><span class="h"><svg class="ico"><use href="#i-doc"/></svg>4 · Recommendation</span><span class="pill p-info">Next</span><p>Perficient recommends the final setup and validates reporting.</p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="pf-role">
+      <div class="sec-head"><h2 id="pf-role">What Perficient validates once unblocked</h2><span class="eyebrow">Step 6 of HubSpot's plan</span></div>
+      <div class="checks">
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-down"/></svg></span><h3>US session recovery <span class="flag" title="United States">🇺🇸</span></h3><p>How much US traffic comes back once opt-out replaces opt-in there.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-chart"/></svg></span><h3>Behavioral Modeling</h3><p>Confirm what GA4 requires before it fills gaps from declined visitors with modeled data.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-check"/></svg></span><h3>Blended identity &amp; thresholds</h3><p>Reporting identity set to Blended (already done) and Google's traffic thresholds met.</p></div>
+      </div>
+      <div class="callout"><svg class="ico"><use href="#i-clock"/></svg><p><b>Next action:</b> send the questions in the <a href="#legal" data-go="legal">Questions for Legal</a> tab to AWS Legal. Their answers unblock both HubSpot Step 1 and Perficient.</p></div>
+    </section>
+  </div>
+
+  <!-- ============ LEGAL ============ -->
+  <div class="panel-tab" role="tabpanel" id="legal" aria-labelledby="tab-legal" hidden>
+    <div class="lead">
+      <div class="badge"><svg class="ico"><use href="#i-scale"/></svg></div>
+      <div><h3>Questions for AWS Legal</h3>
+      <p>Every vendor defers the final approach to Legal. These answers decide the region list, the defaults and the banner platform.</p></div>
+    </div>
+    <div class="qgroups">
+      <div class="qg"><h3><svg class="ico"><use href="#i-globe"/></svg>Which model applies in each region</h3><ol>
+        <li>Which countries or regions require opt-in? Confirm the final list, including the EEA, UK and Switzerland <span class="flags"><span class="flag">🇪🇺</span><span class="flag">🇬🇧</span><span class="flag">🇨🇭</span></span>. HubSpot's privacy settings also list Canada and Brazil <span class="flags"><span class="flag">🇨🇦</span><span class="flag">🇧🇷</span></span>: do they apply to AWS?</li>
+        <li>In the US <span class="flags"><span class="flag">🇺🇸</span></span>, does any state law that applies to AWS require an opt-out, a "Do Not Sell or Share" link, or honoring Global Privacy Control (GPC)?<span class="hint">HubSpot's banner is confirmed to target by country only, not by US state.</span></li>
+        <li>Outside opt-in regions, is tracking on by default acceptable, with a notice and an option to decline?</li></ol></div>
+      <div class="qg"><h3><svg class="ico"><use href="#i-shield"/></svg>Advanced Mode before consent</h3><ol>
+        <li>Advanced Mode sends cookieless signals to Google before a visitor in an opt-in region answers the banner. Is that acceptable there?</li>
+        <li>What should happen for visitors who never interact with the banner, in each region?</li></ol></div>
+      <div class="qg"><h3><svg class="ico"><use href="#i-hand"/></svg>What "Reject" should mean</h3><ol>
+        <li>When a visitor rejects, should all analytics tracking stop? Should existing Google Analytics cookies be deleted or just stop updating?</li>
+        <li>Which categories (analytics storage, ad storage, ad user data, ad personalization) should be denied by default in each region?<span class="hint">If AWS doesn't use Google Ads, denying the ad categories everywhere may be simplest.</span></li></ol></div>
+      <div class="qg"><h3><svg class="ico"><use href="#i-tag"/></svg>Other tools on the site</h3><ol>
+        <li>Which other scripts or vendors need consent before they run?</li></ol></div>
+      <div class="qg" style="grid-column:1/-1"><h3><svg class="ico"><use href="#i-doc"/></svg>Text, records and policies</h3><ol>
+        <li>Define the banner text for each region, and update the Cookie Policy and Privacy Policy to match the final setup.</li>
+        <li>Decide whether visitors' consent choices must be recorded, and where.</li>
+        <li>Decide whether the legal requirements favor HubSpot's banner or a dedicated platform such as CookieYes.<span class="hint">If Legal needs targeting by US state or GPC support, that could decide the platform.</span></li></ol></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>Sources.</b> OuterBox recommendations and its CookieYes implementation; HubSpot implementation plan and technical advice; Perficient status; internal list of questions for AWS Legal. Compiled Oct 23, 2026.</p>
+  <p><b>Note.</b> Vendor examples are not legal advice. Flags show which regions a point refers to; final region lists come from AWS Legal.</p>
+</footer>
+
+</div>
+</main>
+
+<script>
+(function(){
+  const ids=['outerbox','hubspot','perficient','legal'];
+  function show(id,focus){
+    if(!ids.includes(id))id='outerbox';
+    ids.forEach(t=>{
+      const tab=document.getElementById('tab-'+t),p=document.getElementById(t),on=t===id;
+      tab.setAttribute('aria-selected',on);tab.tabIndex=on?0:-1;p.hidden=!on;
+    });
+    if(focus)document.getElementById('tab-'+id).focus();
+    try{localStorage.setItem('cm-tab',id)}catch(e){}
+  }
+  ids.forEach((t,i)=>{
+    const tab=document.getElementById('tab-'+t);
+    tab.addEventListener('click',()=>show(t));
+    tab.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight')show(ids[(i+1)%ids.length],true);
+      if(e.key==='ArrowLeft')show(ids[(i+ids.length-1)%ids.length],true);
+    });
+  });
+  document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();show(a.dataset.go);document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'})}));
+  let start=(location.hash||'').slice(1);
+  if(!ids.includes(start)){try{start=localStorage.getItem('cm-tab')}catch(e){}}
+  show(start);
+})();
+</script>
+
+</body></html>
