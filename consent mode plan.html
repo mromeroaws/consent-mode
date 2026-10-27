@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>aws.org Consent Mode Plan</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +45,11 @@ p{margin:0}
 .mast h1{font-size:clamp(28px,4.4vw,42px);font-weight:700}
 .mast-meta{display:flex;flex-wrap:wrap;gap:8px 22px;color:var(--mast-muted);font-size:14px}
 .mast-meta b{color:var(--mast-fg);font-weight:600}
+.pdf-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pdf-btn{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--f-display);letter-spacing:.04em;text-transform:uppercase;color:var(--navy);background:#fff;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}
+.pdf-btn:hover{background:var(--mast-accent)}
+.pdf-btn[disabled]{opacity:.6;cursor:progress}
+.pdf-msg{font-size:13.5px;color:var(--mast-muted)}
 .brief{display:grid;grid-template-columns:1fr 1.6fr;gap:22px;border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
 .brief p{margin-top:4px;color:var(--mast-body);font-size:14.5px;max-width:68ch}
 .brief .eyebrow{color:var(--mast-accent)}
@@ -194,6 +198,27 @@ footer p{max-width:110ch}
   .step-top .pill{margin-left:0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Print / Save as PDF: light palette, every tab expanded, one vendor per page */
+@media print{
+  :root,:root[data-theme="dark"]{
+    --navy:#0B2B53; --navy-ink:#0B2B53; --orange:#C9531B; --orange-soft:#F7E3D8;
+    --bg:#F4F5F7; --surface:#FFFFFF; --fg:#18222F; --muted:#5B6675; --line:#DCE0E6; --track:#E7EAEF;
+    --good:#1E7A4C; --good-bg:#E2F2E9; --bad:#B42318; --bad-bg:#FBE6E3; --warn:#9A6200; --warn-bg:#FBF0D9;
+    --info:#28568F; --info-bg:#E3ECF7; --mast-fg:#FFFFFF; --mast-muted:#B9C7DA; --mast-body:#DCE5F1; --mast-accent:#F3A57D; color-scheme:light}
+  @page{size:letter;margin:.45in .4in .5in}
+  html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-size:12.5px;zoom:.78}
+  .wrap{max-width:none}
+  .tabs,.pdf-row{display:none!important}
+  .panel-tab[hidden]{display:grid!important}
+  .panel-tab{break-before:page;gap:22px}
+  #outerbox{break-before:auto}
+  section[aria-labelledby="hs-tech"]{break-before:page}
+  main .wrap{gap:22px;padding-block:18px 20px}
+  .card,.region,.step,.qg,.lead,.callout,.status,.chain,.order{break-inside:avoid}
+  .sec-head{break-after:avoid}
+}
 </style>
 
 <!-- Icon set -->
@@ -220,6 +245,7 @@ footer p{max-width:110ch}
   <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></symbol>
   <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.4V14M12 17h.01"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></symbol>
   <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 8h8v13M2 21h20M7 9h2M7 13h2M7 17h2M15 12h2M15 16h2"/></symbol>
 </svg>
 
@@ -238,6 +264,7 @@ footer p{max-width:110ch}
       <span>Decision owner <b>AWS Legal</b></span>
       <span>Prepared by <b>Miguel Romero</b>, Digital Director</span>
     </div>
+    <div class="pdf-row"><button class="pdf-btn" id="pdf-btn" type="button"><svg class="ico"><use href="#i-download"/></svg>Download PDF</button><span class="pdf-msg" id="pdf-msg" role="status"></span></div>
     <div class="brief">
       <div><span class="eyebrow">Why this matters</span><p>Advanced Consent Mode went live on aws.org around Sept 21, 2026, and reported GA4 sessions dropped.</p></div>
       <div><span class="eyebrow">Where the vendors agree</span><p>Legal decides first. Use different consent rules by region (opt-in where the law requires it, opt-out where it allows it). Keep Advanced Consent Mode so GA4 can still send cookieless signals. Treat post-consent numbers as a new baseline.</p></div>
@@ -454,6 +481,29 @@ footer p{max-width:110ch}
   if(!ids.includes(start)){try{start=localStorage.getItem('cm-tab')}catch(e){}}
   show(start);
 })();
-</script>
 
-</body></html>
+/* Download PDF. Inside Claude: saves the PDF published with the page.
+   Anywhere else (the HTML file opened in a browser or hosted on a site): opens the
+   browser's print dialog, where "Save as PDF" captures every tab via the print styles. */
+(async function(){
+  const btn=document.getElementById('pdf-btn'),msg=document.getElementById('pdf-msg');
+  btn.hidden=false;
+  let dl=null;
+  const inClaude=typeof window.claude?.use==='function';
+  if(inClaude){try{dl=await window.claude.use('downloads')}catch(e){}}
+  if(inClaude&&!dl){btn.hidden=true;return}
+  btn.addEventListener('click',async()=>{
+    if(!dl){msg.textContent='Choose "Save as PDF" as the printer.';window.print();return}
+    btn.disabled=true;msg.textContent='Preparing PDF…';
+    try{
+      const r=await fetch('consent-mode.pdf');
+      if(!r.ok)throw {code:'fetch'};
+      await dl.save({filename:'aws-consent-mode-plan.pdf',data:await r.blob()});
+      msg.textContent='PDF saved.';
+    }catch(e){
+      const c=e&&e.code;
+      msg.textContent=c==='declined'?'':c==='rate_limited'?'A save prompt is already open.':c==='fetch'?'The PDF could not be loaded. Reload the page and try again.':'Download is not available in this view.';
+    }finally{btn.disabled=false}
+  });
+})();
+</script>
