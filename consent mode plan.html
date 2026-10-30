@@ -8,7 +8,7 @@
   --navy:#0B2B53; --navy-ink:#0B2B53; --orange:#C9531B; --orange-soft:#F7E3D8;
   --bg:#F4F5F7; --surface:#FFFFFF; --fg:#18222F; --muted:#5B6675; --line:#DCE0E6; --track:#E7EAEF;
   --good:#1E7A4C; --good-bg:#E2F2E9; --bad:#B42318; --bad-bg:#FBE6E3; --warn:#9A6200; --warn-bg:#FBF0D9;
-  --info:#28568F; --info-bg:#E3ECF7;
+  --info:#28568F; --info-bg:#E3ECF7; --prev:#9AA6B6;
   --mast-fg:#FFFFFF; --mast-muted:#B9C7DA; --mast-body:#DCE5F1; --mast-accent:#F3A57D;
   --f-display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
   --f-body:"Barlow","Segoe UI",Arial,sans-serif;
@@ -18,12 +18,12 @@
   --navy:#0A1F3B; --navy-ink:#9DBBE3; --orange:#F0844D; --orange-soft:#3A2418;
   --bg:#0F151D; --surface:#17202B; --fg:#E7ECF2; --muted:#9AA6B6; --line:#2A3542; --track:#26313E;
   --good:#5CC48C; --good-bg:#16301F; --bad:#F2877B; --bad-bg:#3A1A17; --warn:#E6B65A; --warn-bg:#332710;
-  --info:#8EB4E8; --info-bg:#172A42; --mast-fg:#FFFFFF; --mast-muted:#9DB0C8; --mast-body:#DCE5F1; --mast-accent:#F3A57D; color-scheme:dark}}
+  --info:#8EB4E8; --info-bg:#172A42; --prev:#5E6B7B; --mast-fg:#FFFFFF; --mast-muted:#9DB0C8; --mast-body:#DCE5F1; --mast-accent:#F3A57D; color-scheme:dark}}
 :root[data-theme="dark"]{
   --navy:#0A1F3B; --navy-ink:#9DBBE3; --orange:#F0844D; --orange-soft:#3A2418;
   --bg:#0F151D; --surface:#17202B; --fg:#E7ECF2; --muted:#9AA6B6; --line:#2A3542; --track:#26313E;
   --good:#5CC48C; --good-bg:#16301F; --bad:#F2877B; --bad-bg:#3A1A17; --warn:#E6B65A; --warn-bg:#332710;
-  --info:#8EB4E8; --info-bg:#172A42; --mast-fg:#FFFFFF; --mast-muted:#9DB0C8; --mast-body:#DCE5F1; --mast-accent:#F3A57D; color-scheme:dark}
+  --info:#8EB4E8; --info-bg:#172A42; --prev:#5E6B7B; --mast-fg:#FFFFFF; --mast-muted:#9DB0C8; --mast-body:#DCE5F1; --mast-accent:#F3A57D; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
@@ -200,6 +200,95 @@ footer p{max-width:110ch}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* Print / Save as PDF: light palette, every tab expanded, one vendor per page */
+/* Perficient: options, change table, code */
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.opt{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.opt.chosen{border:2px solid var(--good);padding:15px}
+.opt h3{font-size:17px;font-weight:700;color:var(--navy-ink);display:flex;gap:8px;align-items:flex-start}
+.opt h3 .ico{color:var(--orange);margin-top:1px}
+.opt p{font-size:14.5px;color:var(--muted)}
+.opt .pill{justify-self:start}
+.tscroll{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+table.changes,table.sc{border-collapse:collapse;width:100%;font-size:14.5px}
+table.changes{min-width:600px}
+table.sc{min-width:720px;font-variant-numeric:tabular-nums}
+.changes th,.changes td,.sc th,.sc td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.sc td:nth-child(n+2),.sc th:nth-child(n+2){text-align:right;white-space:nowrap}
+.changes thead th,.sc thead th{font-family:var(--f-display);font-weight:600;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg);border-bottom:2px solid var(--line)}
+.changes tbody tr:last-child td,.sc tbody tr:last-child td{border-bottom:0}
+.changes td.n{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--orange);width:40px}
+.where{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13.5px;border-radius:999px;padding:2px 10px 2px 7px;white-space:nowrap}
+.where .ico{width:15px;height:15px}
+.w-page{background:var(--orange-soft);color:var(--orange)}
+.w-gtm{background:var(--info-bg);color:var(--info)}
+.w-hs{background:var(--good-bg);color:var(--good)}
+.sc .was{display:block;color:var(--muted);font-size:12.5px;font-weight:400}
+.sc .dn{color:var(--bad);font-weight:600}
+.hl-o{background:var(--orange-soft)}
+details.code{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 16px}
+details.code summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:16px;color:var(--navy-ink);display:flex;align-items:center;gap:8px}
+details.code summary .ico{color:var(--orange)}
+details.code pre{margin:12px 0 8px;overflow-x:auto;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:12px 14px}
+details.code pre code{background:none;padding:0;font-size:12.5px;line-height:1.55;color:var(--fg)}
+
+/* Forecast */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 16px 14px;display:grid;gap:8px;align-content:start;min-width:0}
+.kpi.hero{border:2px solid var(--orange);padding:15px 15px 13px}
+.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.kpi h3{font-size:16px;font-weight:600;color:var(--muted)}
+.kpi .val{font-family:var(--f-display);font-weight:700;font-size:38px;line-height:1;font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:13px;color:var(--muted)}
+.kpi .sub b{color:var(--fg)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:12px;min-width:0}
+.legend-row{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13.5px;color:var(--muted)}
+.legend-row span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:14px;height:4px;border-radius:2px;display:inline-block}
+.sw.band{height:12px;width:14px;background:var(--warn-bg);border:1px solid var(--warn)}
+.chart-box{position:relative}
+.chart{width:100%;height:auto;display:block}
+svg text{font-family:var(--f-body)}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--surface);font-size:12.5px;padding:8px 10px;border-radius:5px;line-height:1.4;white-space:nowrap;transform:translate(-50%,-100%);font-variant-numeric:tabular-nums;z-index:2}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);padding-top:10px}
+.stats div{padding:0 12px;border-left:1px solid var(--line);display:grid;gap:2px;min-width:0}
+.stats div:first-child{border-left:0;padding-left:0}
+.stats span{font-family:var(--f-display);font-weight:600;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.stats b{font-family:var(--f-display);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.stats b.neg{color:var(--bad)}
+.stats em{font-style:normal;font-size:12.5px;color:var(--muted)}
+.est{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:14px}
+.est-in,.est-out{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.est-in label{display:flex;justify-content:space-between;gap:8px;font-weight:600;font-size:14px}
+.est-in output{font-family:var(--f-data);font-size:13px;color:var(--orange)}
+.est-in input[type=range]{width:100%;accent-color:var(--orange);margin:0 0 6px}
+.seg2{border:0;padding:0;margin:4px 0 6px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+.seg2 legend{font-weight:600;font-size:14px;padding:0;margin-bottom:4px;width:100%}
+.seg2 label{font-weight:500;display:inline-flex;gap:6px;align-items:center}
+button.chip{justify-self:start;font:600 13px var(--f-body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+button.chip:hover{border-color:var(--navy-ink)}
+.est-out{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.big{display:grid;gap:2px}
+.big span{font-family:var(--f-display);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.big b{font-family:var(--f-display);font-size:38px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--navy-ink)}
+.big em{font-style:normal;font-size:13px;color:var(--muted)}
+.mini-t{grid-column:1/-1;border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+.mini-t th,.mini-t td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right}
+.mini-t th:first-child,.mini-t td:first-child{text-align:left}
+.mini-t thead th{font-family:var(--f-display);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mini-t tbody tr:last-child td{border-bottom:0;font-weight:700}
+@media (max-width:900px){
+  .opts,.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .opts .opt.chosen{grid-column:1/-1}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:12px}
+  .stats div:nth-child(3){border-left:0;padding-left:0}
+  .est{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .opts,.kpis{grid-template-columns:minmax(0,1fr)}
+  .est-out{grid-template-columns:minmax(0,1fr)}
+  .stats div{padding-left:0 !important}
+}
+
 @media print{
   :root,:root[data-theme="dark"]{
     --navy:#0B2B53; --navy-ink:#0B2B53; --orange:#C9531B; --orange-soft:#F7E3D8;
@@ -214,6 +303,10 @@ footer p{max-width:110ch}
   .panel-tab[hidden]{display:grid!important}
   .panel-tab{break-before:page;gap:22px}
   #outerbox{break-before:auto}
+  details.code{display:block}
+  details.code > *{display:block}
+  .est-in{display:none}
+  .est{grid-template-columns:minmax(0,1fr)}
   section[aria-labelledby="hs-tech"]{break-before:page}
   main .wrap{gap:22px;padding-block:18px 20px}
   .card,.region,.step,.qg,.lead,.callout,.status,.chain,.order{break-inside:avoid}
@@ -259,7 +352,7 @@ footer p{max-width:110ch}
       </div>
     </div>
     <div class="mast-meta">
-      <span>Status as of <b>Oct 23, 2026</b></span>
+      <span>Status as of <b>Oct 30, 2026</b></span>
       <span>Vendors <b>OuterBox · HubSpot · Perficient</b></span>
       <span>Decision owner <b>AWS Legal</b></span>
       <span>Prepared by <b>Miguel Romero</b>, Digital Director</span>
@@ -281,7 +374,7 @@ footer p{max-width:110ch}
     <div><span class="who"><svg class="ico"><use href="#i-scale"/></svg>AWS Legal</span><span class="pill p-warn">Decision pending</span><p>Must answer the open questions before anyone builds.</p></div>
     <div><span class="who"><svg class="ico"><use href="#i-building"/></svg>OuterBox</span><span class="pill p-good">Delivered</span><p>Shared its own CookieYes setup as an example, not legal advice.</p></div>
     <div><span class="who"><svg class="ico"><use href="#i-plug"/></svg>HubSpot</span><span class="pill p-info">Plan ready</span><p>Six-step plan. Two product questions still open with HubSpot.</p></div>
-    <div><span class="who"><svg class="ico"><use href="#i-chart"/></svg>Perficient</span><span class="pill p-warn">Waiting on Legal</span><p>Will recommend once Legal answers.</p></div>
+    <div><span class="who"><svg class="ico"><use href="#i-chart"/></svg>Perficient</span><span class="pill p-good">Recommendation in</span><p>Oct 30: set consent in the page head, let GTM follow.</p></div>
   </div>
 </section>
 
@@ -290,7 +383,8 @@ footer p{max-width:110ch}
     <button class="tab" role="tab" id="tab-outerbox" aria-controls="outerbox" aria-selected="true"><svg class="ico"><use href="#i-building"/></svg>OuterBox</button>
     <button class="tab" role="tab" id="tab-hubspot" aria-controls="hubspot" aria-selected="false"><svg class="ico"><use href="#i-plug"/></svg>HubSpot</button>
     <button class="tab" role="tab" id="tab-perficient" aria-controls="perficient" aria-selected="false"><svg class="ico"><use href="#i-chart"/></svg>Perficient</button>
-    <button class="tab" role="tab" id="tab-legal" aria-controls="legal" aria-selected="false"><svg class="ico"><use href="#i-scale"/></svg>Questions for Legal <span class="cnt">11</span></button>
+    <button class="tab" role="tab" id="tab-forecast" aria-controls="forecast" aria-selected="false"><svg class="ico"><use href="#i-down"/></svg>2027 Forecast</button>
+    <button class="tab" role="tab" id="tab-legal" aria-controls="legal" aria-selected="false"><svg class="ico"><use href="#i-scale"/></svg>Questions for Legal <span class="cnt">12</span></button>
   </div>
 
   <!-- ============ OUTERBOX ============ -->
@@ -395,28 +489,191 @@ footer p{max-width:110ch}
   <div class="panel-tab" role="tabpanel" id="perficient" aria-labelledby="tab-perficient" hidden>
     <div class="lead">
       <div class="badge"><svg class="ico"><use href="#i-chart"/></svg></div>
-      <div><h3>Perficient: waiting for Legal before recommending</h3>
-      <p>Perficient is holding its recommendation until AWS Legal answers the open questions. Its own role in the plan is reporting: checking that GA4 data recovers and that modeling can switch on.</p></div>
+      <div><h3>Perficient: set consent on the page, let GTM follow</h3>
+      <p>Perficient recommends setting Google Consent Mode in the page head from the HubSpot banner, with GTM reading that state. It builds on the gtag calls aws.org already has and corrects what caused the original problem in production. Details may shift with Legal's guidance, but the approach stays the same.</p>
+      <p class="note" style="margin-top:6px">Point of view received Oct 30, 2026.</p></div>
     </div>
 
-    <section aria-labelledby="pf-chain">
-      <div class="sec-head"><h2 id="pf-chain">How we got here and what unlocks Perficient</h2><span class="eyebrow">Dependency chain</span></div>
-      <div class="chain">
-        <div><span class="h"><svg class="ico"><use href="#i-search"/></svg>1 · Audit</span><span class="pill p-good">Done</span><p>Perficient's ticket reviewing GTM scripts found GA4 tracking before consent.</p></div>
-        <div><span class="h"><svg class="ico"><use href="#i-shield"/></svg>2 · Fix</span><span class="pill p-good">Live ~Sep 21</span><p>Advanced Consent Mode went live, recommended and validated by HubSpot Support. Reported sessions dropped.</p></div>
-        <div class="blocked"><span class="h"><svg class="ico"><use href="#i-scale"/></svg>3 · Legal</span><span class="pill p-warn">Blocking</span><p>Legal's answers set the regions, defaults and banner rules.</p></div>
-        <div><span class="h"><svg class="ico"><use href="#i-doc"/></svg>4 · Recommendation</span><span class="pill p-info">Next</span><p>Perficient recommends the final setup and validates reporting.</p></div>
+    <section aria-labelledby="pf-opts">
+      <div class="sec-head"><h2 id="pf-opts">Three ways to build it</h2><span class="eyebrow">Perficient's options</span></div>
+      <div class="opts">
+        <div class="opt chosen"><span class="pill p-good">Recommended</span><h3><svg class="ico"><use href="#i-code"/></svg>GTM + gtag consent scripts + CMP callback</h3><p>Consent defaults and the HubSpot listener live in the page head. GTM reads the state. Builds on what aws.org already started.</p></div>
+        <div class="opt"><span class="pill p-info">Not chosen</span><h3><svg class="ico"><use href="#i-tag"/></svg>Everything in GTM</h3><p>Consent logic in a GTM consent template. Google leans toward templates, but it means rebuilding the HubSpot hookup in a container that UAT and production share.</p></div>
+        <div class="opt"><span class="pill p-info">Not chosen</span><h3><svg class="ico"><use href="#i-plug"/></svg>Direct CMP integration</h3><p>The consent platform talks to Google directly. Listed as the third common pattern.</p></div>
       </div>
     </section>
 
-    <section aria-labelledby="pf-role">
-      <div class="sec-head"><h2 id="pf-role">What Perficient validates once unblocked</h2><span class="eyebrow">Step 6 of HubSpot's plan</span></div>
+    <section aria-labelledby="pf-why">
+      <div class="sec-head"><h2 id="pf-why">Why this approach</h2><span class="eyebrow">Perficient POV</span></div>
       <div class="checks">
-        <div class="card"><span class="ic"><svg class="ico"><use href="#i-down"/></svg></span><h3>US session recovery <span class="flag" title="United States">🇺🇸</span></h3><p>How much US traffic comes back once opt-out replaces opt-in there.</p></div>
-        <div class="card"><span class="ic"><svg class="ico"><use href="#i-chart"/></svg></span><h3>Behavioral Modeling</h3><p>Confirm what GA4 requires before it fills gaps from declined visitors with modeled data.</p></div>
-        <div class="card"><span class="ic"><svg class="ico"><use href="#i-check"/></svg></span><h3>Blended identity &amp; thresholds</h3><p>Reporting identity set to Blended (already done) and Google's traffic thresholds met.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-clock"/></svg></span><h3>No timing gap</h3><p>The denied default is set before GTM loads, so Google tags never fire without a consent state.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-plug"/></svg></span><h3>Follows HubSpot</h3><p>HubSpot documents a gtag default and listener for Google Consent Mode. This builds on that.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-tag"/></svg></span><h3>Small GTM change</h3><p>The GA4 All Pages tag stays as it is. Only tags that need consent get a trigger and a check.</p></div>
       </div>
-      <div class="callout"><svg class="ico"><use href="#i-clock"/></svg><p><b>Next action:</b> send the questions in the <a href="#legal" data-go="legal">Questions for Legal</a> tab to AWS Legal. Their answers unblock both HubSpot Step 1 and Perficient.</p></div>
+      <div class="callout warn"><svg class="ico"><use href="#i-warn"/></svg><p><b>Trade-off accepted:</b> the consent code lives in the Sitecore page head, so any change to it goes through a site release.</p></div>
+    </section>
+
+    <section aria-labelledby="pf-plan">
+      <div class="sec-head"><h2 id="pf-plan">Five changes</h2><span class="eyebrow">Two on the page · two in GTM · one in HubSpot</span></div>
+      <div class="tscroll">
+        <table class="changes">
+          <thead><tr><th>#</th><th>Where</th><th>Change</th></tr></thead>
+          <tbody>
+            <tr><td class="n">1</td><td><span class="where w-page"><svg class="ico"><use href="#i-code"/></svg>Page head</span></td><td>Set consent to <b>denied</b>, with a 500 ms wait for the banner choice. Regions follow Legal's decision. Place it above GTM.</td></tr>
+            <tr><td class="n">2</td><td><span class="where w-page"><svg class="ico"><use href="#i-code"/></svg>Page head</span></td><td>Add the HubSpot listener. It sends the visitor's choice to Google and fires <code>hubspotConsentUpdate</code>.</td></tr>
+            <tr><td class="n">3</td><td><span class="where w-gtm"><svg class="ico"><use href="#i-tag"/></svg>GTM</span></td><td>Leave the GTM snippet and the GA4 All Pages tag as they are.</td></tr>
+            <tr><td class="n">4</td><td><span class="where w-gtm"><svg class="ico"><use href="#i-tag"/></svg>GTM</span></td><td>For tags that need consent: trigger on <code>hubspotConsentUpdate</code>, add Additional Consent Checks, and fire once per page.</td></tr>
+            <tr><td class="n">5</td><td><span class="where w-hs"><svg class="ico"><use href="#i-plug"/></svg>HubSpot</span></td><td>Keep the banner script as is. Match the banner's targeting to the region list.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="order" aria-label="Load order in the page head">
+        <span class="blk"><small>1</small>Consent default + listener</span><span class="arr">→</span>
+        <span class="blk"><small>2</small>GTM snippet</span><span class="arr">→</span>
+        <span class="blk"><small>3</small>HubSpot embed (async)</span>
+      </div>
+      <div class="callout"><svg class="ico"><use href="#i-sync"/></svg><p><b>Differs from HubSpot's Step 4.</b> HubSpot's plan removes the <code>hubspotConsentUpdate</code> trigger. Perficient keeps that event and uses it as the trigger for tags that need consent. Settle this with both vendors before the GTM work starts.</p></div>
+    </section>
+
+    <section aria-labelledby="pf-next">
+      <div class="sec-head"><h2 id="pf-next">Before building</h2><span class="eyebrow">Open items</span></div>
+      <div class="cards">
+        <div class="card r"><span class="ic"><svg class="ico"><use href="#i-scale"/></svg></span><h3>Needs a Legal decision <span class="pill p-warn">Blocking</span></h3><p>Legal confirms the region list. Legal also decides whether returning visitors start as granted when the HubSpot consent cookie shows they already accepted.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-flask"/></svg></span><h3>Test in UAT first</h3><p>Set up the UAT GTM container to mirror at least a few tags for each use case, so every case can be tested in UAT before production.</p></div>
+      </div>
+      <details class="code">
+        <summary><svg class="ico"><use href="#i-code"/></svg>Appendix: page head code (starting point)</summary>
+        <pre><code>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+gtag('consent', 'default', {
+  'analytics_storage': 'denied',
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'region': [/* country codes per legal decision */],
+  'wait_for_update': 500
+});
+
+var _hsp = window._hsp = window._hsp || [];
+_hsp.push(['addPrivacyConsentListener', function(consent) {
+  var analytics = consent && (consent.allowed || (consent.categories &amp;&amp;
+    consent.categories.analytics));
+  var ads = consent && (consent.allowed || (consent.categories &amp;&amp;
+    consent.categories.advertisement));
+  gtag('consent', 'update', {
+    'analytics_storage': analytics ? 'granted' : 'denied',
+    'ad_storage': ads ? 'granted' : 'denied',
+    'ad_user_data': ads ? 'granted' : 'denied',
+    'ad_personalization': ads ? 'granted' : 'denied'
+  });
+  gtag('event', 'hubspotConsentUpdate');
+}]);
+
+// Then the GTM head snippet, then the HubSpot embed (async)</code></pre>
+        <p class="note">Based on HubSpot's Google Consent Mode approach, with the 500 ms wait and the <code>hubspotConsentUpdate</code> event added. Perficient asks to confirm the listener fields in UAT.</p>
+      </details>
+    </section>
+
+    <section aria-labelledby="pf-chain">
+      <div class="sec-head"><h2 id="pf-chain">Where this stands</h2><span class="eyebrow">Dependency chain</span></div>
+      <div class="chain">
+        <div><span class="h"><svg class="ico"><use href="#i-search"/></svg>1 · Audit</span><span class="pill p-good">Done</span><p>Perficient's ticket reviewing GTM scripts found GA4 tracking before consent.</p></div>
+        <div><span class="h"><svg class="ico"><use href="#i-shield"/></svg>2 · First fix</span><span class="pill p-good">Live ~Sep 21</span><p>Advanced Consent Mode went live, recommended and validated by HubSpot Support. Reported sessions dropped.</p></div>
+        <div><span class="h"><svg class="ico"><use href="#i-doc"/></svg>3 · Recommendation</span><span class="pill p-good">Received Oct 30</span><p>Perficient's point of view: page-head consent, GTM follows, five changes.</p></div>
+        <div class="blocked"><span class="h"><svg class="ico"><use href="#i-scale"/></svg>4 · Legal</span><span class="pill p-warn">Blocking</span><p>Region list and returning-visitor rule, then UAT, then production.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ FORECAST ============ -->
+  <div class="panel-tab" role="tabpanel" id="forecast" aria-labelledby="tab-forecast" hidden>
+    <div class="lead">
+      <div class="badge"><svg class="ico"><use href="#i-chart"/></svg></div>
+      <div><h3>2027 sessions and engagement rate with the new consent settings</h3>
+      <p>Scenario: <span class="flag">🇺🇸</span> <b>opt-out in the United States</b> and <span class="flag">🇪🇺</span> <b>opt-in in Europe</b> (EEA, UK, Switzerland), with the rest of the world on opt-out. Measured against the 2026 goal of <b>38,500 sessions</b> and a <b>75% engagement rate</b> per week.</p></div>
+    </div>
+
+    <section aria-labelledby="fc-kpi">
+      <div class="sec-head"><h2 id="fc-kpi">Realistic 2027 estimate</h2><span class="eyebrow">Per week · reported in GA4</span></div>
+      <div class="kpis">
+        <article class="kpi hero"><div class="kpi-top"><h3>Weekly sessions</h3><span class="pill p-warn">−6% vs goal</span></div><div class="val">≈36,100</div><div class="sub">Range <b>34,200 – 37,300</b> · goal 38,500</div></article>
+        <article class="kpi"><div class="kpi-top"><h3>Engagement rate</h3><span class="pill p-good">On goal</span></div><div class="val">≈75%</div><div class="sub">Holds at goal, about <b>+0.2 pts</b> from the change</div></article>
+        <article class="kpi"><div class="kpi-top"><h3>Sessions not reported</h3></div><div class="val">≈2,400</div><div class="sub">a week: US <b>1,400</b> · rest of world <b>500</b> · Europe <b>550</b></div></article>
+        <article class="kpi"><div class="kpi-top"><h3>If every region were opt-in</h3><span class="pill p-bad">−44%</span></div><div class="val">≈21,700</div><div class="sub">What the Sep 21 – Oct 17 setup implies</div></article>
+      </div>
+      <div class="callout"><svg class="ico"><use href="#i-check"/></svg><p><b>Recommendation for the 2027 goal:</b> plan on about <b>36,000 reported sessions a week</b> and keep the <b>75%</b> engagement goal. Keeping 38,500 means the site has to grow about 7% to cover the consent loss. Mark Sep 21 – Oct 17, 2026 in every year-over-year comparison.</p></div>
+    </section>
+
+    <section aria-labelledby="fc-sc">
+      <div class="sec-head"><h2 id="fc-sc">Three scenarios</h2><span class="eyebrow">Applied to the 38,500 / 75% goal</span></div>
+      <div class="tscroll">
+        <table class="sc">
+          <thead><tr><th>Scenario</th><th>US &amp; rest of world (opt-out)</th><th>Europe (opt-in)</th><th>Weekly sessions</th><th>vs goal</th><th>Engagement rate</th></tr></thead>
+          <tbody>
+            <tr><td><b>Optimistic</b><span class="was">Few opt-outs; GA4 modeling fills part of Europe</span></td><td>−2%</td><td>−40%</td><td><b>37,300</b></td><td class="dn">−3%</td><td>75.2%</td></tr>
+            <tr class="hl-o"><td><b>Realistic</b><span class="was">Planning number</span></td><td>−5%</td><td>−50%</td><td><b>36,100</b></td><td class="dn">−6%</td><td>75.2%</td></tr>
+            <tr><td><b>Conservative</b><span class="was">More visitors decline; no modeling</span></td><td>−10%</td><td>−55%</td><td><b>34,200</b></td><td class="dn">−11%</td><td>75.2%</td></tr>
+            <tr><td><b>Legal requires opt-in outside the US too</b><span class="was">Opt-out in the US only</span></td><td>US −5% · rest −43%</td><td>−50%</td><td><b>32,200</b></td><td class="dn">−16%</td><td>76.6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Engagement rate rises slightly where consent is opt-in, because GA4 stops reporting many short visits. It is not a real gain in engagement.</p>
+    </section>
+
+    <section aria-labelledby="fc-ev">
+      <div class="sec-head"><h2 id="fc-ev">The evidence: US weekly sessions</h2><span class="eyebrow">GA4 · 2026 vs 2025 · hover a week</span></div>
+      <div class="panel">
+        <div class="legend-row"><span><i class="sw" style="background:var(--navy-ink)"></i>2026</span><span><i class="sw" style="background:var(--prev)"></i>2025, same weeks</span><span><i class="sw band"></i>All regions opt-in (Sep 21 – Oct 17)</span></div>
+        <div class="chart-box" id="fcBox"><svg id="fcChart" class="chart" viewBox="0 0 720 300" role="img" aria-label="US weekly sessions, 2026 versus 2025, weeks starting Aug 16 to Oct 18"></svg><div class="tip" id="fcTip" hidden></div></div>
+        <div class="stats">
+          <div><span>Before (Aug 16 – Sep 19)</span><b>57,500</b><em>79.3% engaged</em></div>
+          <div><span>Opt-in everywhere (Sep 20 – Oct 17)</span><b>34,400</b><em>84.0% engaged</em></div>
+          <div><span>Loss after seasonality</span><b class="neg">−43%</b><em>2025 rose 6% in the same weeks</em></div>
+          <div><span>Week of Oct 18</span><b>57,400</b><em>back at full level</em></div>
+        </div>
+      </div>
+      <div class="callout warn"><svg class="ico"><use href="#i-q"/></svg><p><b>Since Oct 19, US sessions are back at pre-change levels</b> (about 11,000 a day on weekdays, up from about 6,500). That looks like a tracking change in production. Confirm with Perficient what changed before treating that week as the new baseline.</p></div>
+    </section>
+
+    <section aria-labelledby="fc-calc">
+      <div class="sec-head"><h2 id="fc-calc">Try your own assumptions</h2><span class="eyebrow">Estimator</span></div>
+      <div class="est">
+        <div class="est-in">
+          <label for="in-base">Weekly session baseline <output id="o-base"></output></label>
+          <input id="in-base" type="range" min="20000" max="90000" step="500" value="38500">
+          <label for="in-out">Loss in opt-out regions <output id="o-out"></output></label>
+          <input id="in-out" type="range" min="0" max="20" step="1" value="5">
+          <label for="in-eu">Loss in Europe (opt-in) <output id="o-eu"></output></label>
+          <input id="in-eu" type="range" min="20" max="70" step="1" value="50">
+          <label for="in-gr">Traffic growth in 2027 <output id="o-gr"></output></label>
+          <input id="in-gr" type="range" min="-10" max="20" step="1" value="0">
+          <fieldset class="seg2"><legend>Rest of world</legend>
+            <label><input type="radio" name="row" id="row-out" value="out" checked> Opt-out</label>
+            <label><input type="radio" name="row" id="row-in" value="in"> Opt-in</label>
+          </fieldset>
+          <button type="button" class="chip" id="est-reset">Reset to realistic</button>
+        </div>
+        <div class="est-out">
+          <div class="big"><span>2027 weekly sessions</span><b id="r-s">—</b><em id="r-g">—</em></div>
+          <div class="big"><span>Engagement rate</span><b id="r-e">—</b><em>against the 75% goal</em></div>
+          <table class="mini-t">
+            <thead><tr><th>Region</th><th>Share</th><th>Setting</th><th>Weekly sessions</th></tr></thead>
+            <tbody id="r-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="fc-m">
+      <div class="sec-head"><h2 id="fc-m">How the estimate works</h2><span class="eyebrow">Method and assumptions</span></div>
+      <div class="cards">
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-globe"/></svg></span><h3>Traffic mix</h3><p>Jan 4 – Sep 19, 2026, before the change: US <b>71%</b>, Europe <b>3%</b>, rest of world <b>26%</b> of sessions. Engagement: US 73%, Europe 61%, rest 65%.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-down"/></svg></span><h3>Opt-in loss, measured</h3><p>While every region was opt-in, US sessions fell 43% after seasonality and Europe fell 51%. The model uses 50% for Europe.</p></div>
+        <div class="card"><span class="ic"><svg class="ico"><use href="#i-hand"/></svg></span><h3>Opt-out loss, assumed</h3><p>With tracking on until a visitor declines, only visitors who actively opt out drop out. The model uses 5% (range 2–10%). The week of Oct 18 suggests losses may be smaller.</p></div>
+        <div class="card w"><span class="ic"><svg class="ico"><use href="#i-warn"/></svg></span><h3>Not included</h3><p>Traffic growth, campaigns, and GA4 behavioral modeling. Europe's volume (about 300 sessions a day) may be too small for modeling to switch on.</p></div>
+      </div>
+      <p class="note">GA4 records about 75,500 sessions a week site-wide in 2026, about twice the 38,500 goal. The percentages are applied to the goal as given; the estimator's baseline slider applies them to any other baseline.</p>
     </section>
   </div>
 
@@ -434,7 +691,8 @@ footer p{max-width:110ch}
         <li>Outside opt-in regions, is tracking on by default acceptable, with a notice and an option to decline?</li></ol></div>
       <div class="qg"><h3><svg class="ico"><use href="#i-shield"/></svg>Advanced Mode before consent</h3><ol>
         <li>Advanced Mode sends cookieless signals to Google before a visitor in an opt-in region answers the banner. Is that acceptable there?</li>
-        <li>What should happen for visitors who never interact with the banner, in each region?</li></ol></div>
+        <li>What should happen for visitors who never interact with the banner, in each region?</li>
+        <li>Should returning visitors start as granted when the HubSpot consent cookie shows they already accepted?<span class="hint">Raised by Perficient on Oct 30.</span></li></ol></div>
       <div class="qg"><h3><svg class="ico"><use href="#i-hand"/></svg>What "Reject" should mean</h3><ol>
         <li>When a visitor rejects, should all analytics tracking stop? Should existing Google Analytics cookies be deleted or just stop updating?</li>
         <li>Which categories (analytics storage, ad storage, ad user data, ad personalization) should be denied by default in each region?<span class="hint">If AWS doesn't use Google Ads, denying the ad categories everywhere may be simplest.</span></li></ol></div>
@@ -449,7 +707,7 @@ footer p{max-width:110ch}
 </section>
 
 <footer>
-  <p><b>Sources.</b> OuterBox recommendations and its CookieYes implementation; HubSpot implementation plan and technical advice; Perficient status; internal list of questions for AWS Legal. Compiled Oct 23, 2026.</p>
+  <p><b>Sources.</b> OuterBox recommendations and its CookieYes implementation; HubSpot implementation plan and technical advice; Perficient point of view (Oct 30, 2026); internal list of questions for AWS Legal. Forecast: GA4 property "Google Analytics 4 – aws.org" (403249020), pulled through Windsor.ai on Oct 30, 2026. Compiled Oct 30, 2026.</p>
   <p><b>Note.</b> Vendor examples are not legal advice. Flags show which regions a point refers to; final region lists come from AWS Legal.</p>
 </footer>
 
@@ -458,7 +716,7 @@ footer p{max-width:110ch}
 
 <script>
 (function(){
-  const ids=['outerbox','hubspot','perficient','legal'];
+  const ids=['outerbox','hubspot','perficient','forecast','legal'];
   function show(id,focus){
     if(!ids.includes(id))id='outerbox';
     ids.forEach(t=>{
@@ -506,4 +764,56 @@ footer p{max-width:110ch}
     }finally{btn.disabled=false}
   });
 })();
+
+/* 2027 forecast: chart + estimator. Numbers from GA4 (aws.org, property 403249020). */
+(function(){
+  const W=[["Aug 16",57706,45806,67049],["Aug 23",58248,47731,67083],["Aug 30",61205,48738,60373],["Sep 6",52913,40699,64069],["Sep 13",57438,45062,67509],["Sep 20",36779,30537,67281],["Sep 27",32352,27579,69061],["Oct 4",31486,26687,73467],["Oct 11",37026,30842,66208],["Oct 18",57448,44774,62511]];
+  const fmt=n=>Math.round(n).toLocaleString('en-US');
+  const NS='http://www.w3.org/2000/svg';
+  const el=(p,t,a,txt)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;p.appendChild(e);return e};
+  const svg=document.getElementById('fcChart'),box=document.getElementById('fcBox'),tip=document.getElementById('fcTip');
+  const Wd=720,H=300,m={l:52,r:16,t:22,b:30},iw=Wd-m.l-m.r,ih=H-m.t-m.b,top=80000;
+  const x=i=>m.l+iw*(i+.5)/W.length,y=v=>m.t+ih-v/top*ih,step=iw/W.length;
+  el(svg,'rect',{x:m.l+step*5,y:m.t,width:step*4,height:ih,fill:'var(--warn-bg)'});
+  el(svg,'text',{x:m.l+step*7,y:m.t+14,'text-anchor':'middle','font-size':11.5,fill:'var(--warn)','font-weight':600},'All regions opt-in');
+  for(let v=0;v<=top;v+=20000){el(svg,'line',{x1:m.l,x2:Wd-m.r,y1:y(v),y2:y(v),stroke:'var(--line)'});el(svg,'text',{x:m.l-8,y:y(v)+4,'text-anchor':'end','font-size':11,fill:'var(--muted)'},v?v/1000+'k':'0')}
+  W.forEach((w,i)=>{if(i%2===0||i===W.length-1)el(svg,'text',{x:x(i),y:H-8,'text-anchor':'middle','font-size':11,fill:'var(--muted)'},w[0])});
+  const path=k=>W.map((w,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(w[k]).toFixed(1)).join(' ');
+  el(svg,'path',{d:path(3),fill:'none',stroke:'var(--prev)','stroke-width':2,'stroke-dasharray':'5 4'});
+  el(svg,'path',{d:path(1),fill:'none',stroke:'var(--navy-ink)','stroke-width':2.5});
+  W.forEach((w,i)=>el(svg,'circle',{cx:x(i),cy:y(w[1]),r:4,fill:'var(--navy-ink)',stroke:'var(--surface)','stroke-width':2}));
+  el(svg,'text',{x:x(W.length-1)-6,y:y(W[W.length-1][3])+16,'text-anchor':'end','font-size':11.5,fill:'var(--muted)'},'2025');
+  el(svg,'text',{x:x(7),y:y(W[7][1])+20,'text-anchor':'middle','font-size':11.5,fill:'var(--navy-ink)','font-weight':600},'2026');
+  const cross=el(svg,'line',{x1:0,x2:0,y1:m.t,y2:m.t+ih,stroke:'var(--muted)','stroke-width':1,opacity:0});
+  W.forEach((w,i)=>{const h=el(svg,'rect',{x:m.l+step*i,y:m.t,width:step,height:ih,fill:'transparent'});
+    h.addEventListener('mouseenter',()=>{cross.setAttribute('x1',x(i));cross.setAttribute('x2',x(i));cross.setAttribute('opacity',1);
+      tip.innerHTML='<b>Week of '+w[0]+'</b><br>2026: '+fmt(w[1])+' sessions · '+Math.round(w[2]/w[1]*100)+'% engaged<br>2025: '+fmt(w[3])+' sessions';
+      tip.hidden=false;const sc=box.clientWidth/Wd;tip.style.left=Math.min(Math.max(x(i)*sc,110),box.clientWidth-110)+'px';tip.style.top=Math.max(y(Math.max(w[1],w[3]))*sc-8,58)+'px'});
+    h.addEventListener('mouseleave',()=>{tip.hidden=true;cross.setAttribute('opacity',0)})});
+
+  /* Estimator: 2026 mix Jan 4 – Sep 19 (sessions share, engagement rate) */
+  const MIX={us:{n:'🇺🇸 United States',sh:.7096,er:.7317},eu:{n:'🇪🇺 Europe',sh:.0283,er:.6109},row:{n:'🌍 Rest of world',sh:.2621,er:.6518}};
+  const BASE_ER=.7074,GOAL=38500,GOAL_ER=.75,OPTIN_ER_LIFT=.04,ROW_OPTIN_LOSS=.43;
+  const $=id=>document.getElementById(id);
+  const ins={base:$('in-base'),out:$('in-out'),eu:$('in-eu'),gr:$('in-gr')};
+  const defaults={base:38500,out:5,eu:50,gr:0};
+  function calc(){
+    const b=+ins.base.value,o=ins.out.value/100,e=ins.eu.value/100,g=1+ins.gr.value/100,rowIn=$('row-in').checked;
+    $('o-base').textContent=fmt(b);$('o-out').textContent='−'+ins.out.value+'%';$('o-eu').textContent='−'+ins.eu.value+'%';$('o-gr').textContent=(ins.gr.value>0?'+':'')+ins.gr.value+'%';
+    const loss={us:o,eu:e,row:rowIn?ROW_OPTIN_LOSS:o},lift={us:0,eu:OPTIN_ER_LIFT,row:rowIn?OPTIN_ER_LIFT:0};
+    let S=0,E=0;const rows=[];
+    for(const k in MIX){const s=b*g*MIX[k].sh*(1-loss[k]);S+=s;E+=s*(MIX[k].er+lift[k]);rows.push([MIX[k].n,(MIX[k].sh*100).toFixed(0)+'%',(k==='eu'||(k==='row'&&rowIn)?'Opt-in':'Opt-out')+' · −'+Math.round(loss[k]*100)+'%',fmt(s)])}
+    const er=GOAL_ER+(E/S-BASE_ER);
+    $('r-s').textContent=fmt(S);
+    const d=S/GOAL-1;$('r-g').textContent=(d>=0?'+':'−')+Math.abs(d*100).toFixed(1)+'% vs the 38,500 goal';
+    $('r-e').textContent=(er*100).toFixed(1)+'%';
+    const tb=$('r-rows');tb.textContent='';
+    rows.concat([['Total','100%','',fmt(S)]]).forEach(r=>{const tr=document.createElement('tr');r.forEach(c=>{const td=document.createElement('td');td.textContent=c;tr.appendChild(td)});tb.appendChild(tr)});
+  }
+  Object.values(ins).forEach(i=>i.addEventListener('input',calc));
+  document.querySelectorAll('input[name=row]').forEach(r=>r.addEventListener('change',calc));
+  $('est-reset').addEventListener('click',()=>{for(const k in defaults)ins[k].value=defaults[k];$('row-out').checked=true;calc()});
+  calc();
+})();
+addEventListener('beforeprint',()=>document.querySelectorAll('details.code').forEach(d=>d.open=true));
 </script>
